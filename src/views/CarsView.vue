@@ -14,8 +14,6 @@
     <router-link to="/submit">車情報登録</router-link>
     <br>
     <router-link to="/delete">車情報削除</router-link>
-    <br><br><br>
-    <button @click="dummyErrors">エラー発生（テスト）</button>
   </div>
 </template>
   
@@ -57,19 +55,7 @@
       resetsearch() {
         this.searchKeyword = '';
         this.fetchCars();
-      },
-      dummyErrors() {
-        let url = `${this.apiUrl}/dummyerrors`
-        fetch(url)
-          .then(response => {
-            if (!response.ok) {
-              throw new Error("Errors(Test).");
-            }
-            return response.json();
-          })
-          .catch(err => console.error(err));
-      },
-
+      }
     }
   }
 </script>
