@@ -2,7 +2,12 @@
   <router-view />
   <br><br><br>
   <div>
-    <button @click="dummyErrors">エラー発生（テスト）</button>
+    <button @click="sleepCall">API大量コール（{{ this.API_CALL_COUNT }}回）</button>
+    <div>{{ this.sleepFin }}</div>
+  </div>
+  <br>
+  <div>
+    <button @click="dummyErrors">500エラー発生（テスト）</button>
   </div>
 </template>
 
@@ -11,10 +16,33 @@
     name: 'App',
     data() {
       return {
-        apiUrl: `${import.meta.env.VITE_API_PROTOCOL}://${window.location.hostname}${import.meta.env.VITE_API_PORT}${import.meta.env.VITE_API_PATH}`
+        apiUrl: `${import.meta.env.VITE_API_PROTOCOL}://${window.location.hostname}${import.meta.env.VITE_API_PORT}${import.meta.env.VITE_API_PATH}`,
+        API_CALL_COUNT: 20,
+        sleepFin: ''
       }
     },
     methods: {
+      fetchSleep(url, n) {
+        fetch(url)
+        .then(response => {
+          if (n == this.API_CALL_COUNT) {
+            this.sleepFin = 'APIコール完了'
+          }
+          return response.json();
+        })
+        .catch(err => {
+          console.error(err);
+          throw new Error("API Call error.");
+        });
+      },
+      sleepCall() {
+        let url = `${this.apiUrl}/sleep`;
+        let n = 0;
+        while (n < this.API_CALL_COUNT) {
+          n += 1;
+          this.fetchSleep(url, n);
+        }
+      },
       dummyErrors() {
         let url = `${this.apiUrl}/dummyerrors`
         fetch(url)
