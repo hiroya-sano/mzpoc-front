@@ -14,6 +14,8 @@
     <router-link to="/submit">車情報登録</router-link>
     <br>
     <router-link to="/delete">車情報削除</router-link>
+    <br><br>
+    <router-link to="/test">検証用</router-link>
   </div>
 </template>
   
