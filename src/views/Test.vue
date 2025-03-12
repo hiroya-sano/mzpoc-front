@@ -19,6 +19,7 @@
   <br>
   <div>
     <button @click="dummyErrors">500エラー発生（テスト）</button>
+    <div>{{ this.dumErrorFin }}</div>
   </div>
   <br>
   <router-link to="/">戻る</router-link>
@@ -34,6 +35,7 @@
         sleepFin: '',
         memoryLeakFin: '',
         heavyQueryFin: '',
+        dumErrorFin: ''
       }
     },
     methods: {
@@ -76,6 +78,7 @@
               this.memoryLeakFin = 'メモリリークエラー発生。Podの再起動が必要';
               throw new Error("Error by memory leak.");
             }
+            this.memoryLeakFin = 'OK';
             return response.json();
           })
           .catch(err => {
@@ -104,6 +107,7 @@
         fetch(url)
           .then(response => {
             if (!response.ok) {
+              this.dumErrorFin = 'エラー発生';
               throw new Error("Errors(Test).");
             }
             return response.json();
