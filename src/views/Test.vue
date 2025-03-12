@@ -119,7 +119,7 @@
           .then(response => {
             if (!response.ok) {
               this.cpuLoadFin = 'CPU負荷異常終了'
-              throw new Error("Error by heavy query.");
+              throw new Error("Error by cpu load.");
             }
             return response.text();
             })
@@ -128,7 +128,7 @@
           })
           .catch(err => {
             console.error(err);
-            throw new Error("Error by heavy query.");
+            throw new Error("Error by cpu load.");
           });
       },
       dummyErrors() {
