@@ -18,6 +18,12 @@
   </div>
   <br>
   <div>
+    <input v-model="fibN" placeholder="フィボナッチ数列n値：" />
+    <button @click="cpuLoad">CPU負荷</button>
+    <div>{{ this.cpuLoadFin }}</div>
+  </div>
+  <br>
+  <div>
     <button @click="dummyErrors">500エラー発生（テスト）</button>
     <div>{{ this.dumErrorFin }}</div>
   </div>
@@ -35,6 +41,8 @@
         sleepFin: '',
         memoryLeakFin: '',
         heavyQueryFin: '',
+        fibN: '',
+        cpuLoadFin: '',
         dumErrorFin: ''
       }
     },
@@ -96,6 +104,27 @@
             }
             this.heavyQueryFin = '重いクエリ完了'
             return response.json();
+          })
+          .catch(err => {
+            console.error(err);
+            throw new Error("Error by heavy query.");
+          });
+      },
+      cpuLoad() {
+        let url = `${this.apiUrl}/cpuload`;
+        if (this.fibN) {
+          url += `?n=${this.fibN}`;
+        }
+        fetch(url)
+          .then(response => {
+            if (!response.ok) {
+              this.cpuLoadFin = 'CPU負荷異常終了'
+              throw new Error("Error by heavy query.");
+            }
+            return response.text();
+            })
+          .then(text => {
+            this.cpuLoadFin = `CPU負荷完了：${text}`
           })
           .catch(err => {
             console.error(err);
