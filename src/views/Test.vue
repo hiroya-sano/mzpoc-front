@@ -87,7 +87,6 @@
               throw new Error(`Error by memory leak. http status${response.status}.`);
             }
             this.memoryLeakFin = 'OK';
-            return response.json();
           })
           .catch(err => {
             console.error(err);
