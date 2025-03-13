@@ -84,7 +84,7 @@
           .then(response => {
             if (!response.ok) {
               this.memoryLeakFin = `メモリリークエラー発生（httpステータス：${response.status}）。Podの再起動を推奨`;
-              throw new Error(`Error by memory leak (http status${response.status}).`);
+              throw new Error(`Error by memory leak. http status${response.status}.`);
             }
             this.memoryLeakFin = 'OK';
             return response.json();
@@ -100,7 +100,7 @@
           .then(response => {
             if (!response.ok) {
               this.heavyQueryFin = `重いクエリエラー発生（httpステータス：${response.status}）`
-              throw new Error(`Error by heavy query (http status: ${response.status}).`);
+              throw new Error(`Error by heavy query. http status: ${response.status}.`);
             }
             this.heavyQueryFin = '重いクエリ完了'
             return response.json();
@@ -119,7 +119,7 @@
           .then(response => {
             if (!response.ok) {
               this.cpuLoadFin = `フィボナッチ数列エラー発生（httpステータス：${response.status}）`
-              throw new Error(`Error by cpu load (http status: ${response.status}).`);
+              throw new Error(`Error by cpu load. http status: ${response.status}.`);
             }
             return response.text();
             })
