@@ -83,7 +83,7 @@
         fetch(url)
           .then(response => {
             if (!response.ok) {
-              this.memoryLeakFin = 'メモリリークエラー発生。Podの再起動が必要';
+              this.memoryLeakFin = `メモリリークエラー発生（httpステータス：${response.status}）。Podの再起動を推奨`;
               throw new Error("Error by memory leak.");
             }
             this.memoryLeakFin = 'OK';
@@ -95,11 +95,11 @@
           });
       },
       heavyQuery() {
-        let url = `${this.apiUrl}/heavyData?description`
+        let url = `${this.apiUrl}/heavyData`
         fetch(url)
           .then(response => {
             if (!response.ok) {
-              this.heavyQueryFin = '重いクエリ異常終了'
+              this.heavyQueryFin = `重いクエリエラー発生（httpステータス：${response.status}）`
               throw new Error("Error by heavy query.");
             }
             this.heavyQueryFin = '重いクエリ完了'
@@ -118,13 +118,13 @@
         fetch(url)
           .then(response => {
             if (!response.ok) {
-              this.cpuLoadFin = 'CPU負荷異常終了'
+              this.cpuLoadFin = `フィボナッチ数列エラー発生（httpステータス：${response.status}）`
               throw new Error("Error by cpu load.");
             }
             return response.text();
             })
           .then(text => {
-            this.cpuLoadFin = `CPU負荷完了：${text}`
+            this.cpuLoadFin = `フィボナッチ数列完了：${text}`
           })
           .catch(err => {
             console.error(err);
