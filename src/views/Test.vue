@@ -8,6 +8,7 @@
   <br>
   <div>
     <button @click="fetchMemoryLeak">メモリリーク</button>
+    <button @click="fetchMemoryLeakMore">メモリリーク中の呼び出し</button>
     <button @click="fetchMemoryRelease">メモリ解放</button>
     <div>{{ this.memoryLeakFin }}</div>
   </div>
@@ -91,6 +92,21 @@
           .catch(err => {
             console.error(err);
             throw new Error("Memory leak error.");
+          });
+      },
+      fetchMemoryLeakMore() {
+        let url = `${this.apiUrl}/memoryLeak/more`
+        fetch(url)
+          .then(response => {
+            if (!response.ok) {
+              this.memoryLeakFin = `メモリリークエラー発生（httpステータス：${response.status}）`;
+              throw new Error(`Error by memory leak. http status${response.status}.`);
+            }
+            this.memoryLeakFin = 'OK';
+          })
+          .catch(err => {
+            console.error(err);
+            throw new Error("Memory leak more error.");
           });
       },
       heavyQuery() {
